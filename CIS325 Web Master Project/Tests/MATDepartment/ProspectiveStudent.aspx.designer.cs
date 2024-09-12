@@ -15,6 +15,15 @@ namespace CIS325_Web_Master_Project.Demos.MATDepartment
     {
 
         /// <summary>
+        /// Panel1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel Panel1;
+
+        /// <summary>
         /// Name control.
         /// </summary>
         /// <remarks>
@@ -42,21 +51,39 @@ namespace CIS325_Web_Master_Project.Demos.MATDepartment
         protected global::System.Web.UI.WebControls.TextBox Age;
 
         /// <summary>
-        /// Email control.
+        /// Languages control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Email;
+        protected global::System.Web.UI.WebControls.CheckBoxList Languages;
 
         /// <summary>
-        /// IntendedMajor control.
+        /// DevTools control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList IntendedMajor;
+        protected global::System.Web.UI.WebControls.CheckBoxList DevTools;
+
+        /// <summary>
+        /// Submit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Submit;
+
+        /// <summary>
+        /// ResultMsg control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ResultMsg;
     }
 }

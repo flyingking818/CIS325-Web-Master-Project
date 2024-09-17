@@ -13,5 +13,16 @@ namespace CIS325_Web_Master_Project.Demos.MATDepartment
         {
 
         }
+
+        protected void Submit_Click(object sender, EventArgs e)
+        {
+            string htmlOutput;
+            FormPanel.Visible = false;
+
+            htmlOutput = "<h2>Thank you for submitting you form, " + Name.Text + "</h2>";
+            htmlOutput += "<br> Hope to see you at Flagler soon! :)";
+            //keep adding whatever you need for output here.
+            ResultMsg.Text = htmlOutput;
+        }
     }
 }

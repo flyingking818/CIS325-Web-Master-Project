@@ -15,6 +15,15 @@ namespace CIS325_Web_Master_Project.Demos.MATDepartment
     {
 
         /// <summary>
+        /// FormPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel FormPanel;
+
+        /// <summary>
         /// Name control.
         /// </summary>
         /// <remarks>
@@ -58,5 +67,50 @@ namespace CIS325_Web_Master_Project.Demos.MATDepartment
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList IntendedMajor;
+
+        /// <summary>
+        /// ProgrammingLanguages control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBoxList ProgrammingLanguages;
+
+        /// <summary>
+        /// DeveloperTools control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBoxList DeveloperTools;
+
+        /// <summary>
+        /// Comments control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox Comments;
+
+        /// <summary>
+        /// Submit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Submit;
+
+        /// <summary>
+        /// ResultMsg control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ResultMsg;
     }
 }

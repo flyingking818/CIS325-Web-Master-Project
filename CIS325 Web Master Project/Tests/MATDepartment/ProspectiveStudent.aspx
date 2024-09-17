@@ -1,18 +1,31 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ProspectiveStudent.aspx.cs" Inherits="CIS325_Web_Master_Project.Demos.MATDepartment.ProspectiveStudent" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    <style>
+        .sideways {
+            background: black;
+            text-orientation: sideways;
+            writing-mode: vertical-lr;
+            color: white;
+        }
+        .customTextbox{
+            background:#d5bb7f;
+        }
+    </style>
+    
+    
     <h1>MAT Prospective Students Form</h1>
 
     <br />
     <asp:Panel ID="Panel1" runat="server">
-    <table style="border: 1px solid black" width="100%">
+    <table style="border: 1px solid black" width="100%" cellpadding="10">
         <tr>
             <td width="30%">
                 <strong>Student Name: </strong>
             </td>
 
             <td width="70%">
-                <asp:TextBox runat="server" ID="Name"></asp:TextBox></td>
+                <asp:TextBox runat="server" ID="Name" class="customTextbox"></asp:TextBox></td>
 
         </tr>
         

@@ -121,6 +121,7 @@
     <Content Include="Default.aspx" />
     <Content Include="Demos\HelloWorld\HelloWorld.aspx" />
     <Content Include="Demos\HelloWorld\TestMAT.aspx" />
+    <Content Include="Demos\MATDepartment\fc-logo.jpg" />
     <Content Include="Demos\MATDepartment\ProspectiveStudent.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />

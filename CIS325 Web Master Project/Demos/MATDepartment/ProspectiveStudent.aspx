@@ -14,7 +14,7 @@
         }
     </style>
     
-    
+    <span style="display:block;text-align:center;"><img src="fc-logo.png" width="220px" /></span>
     
     <h1>MAT Prospective Students Form</h1>
 
@@ -28,7 +28,7 @@
 
             </td>
             <td width="70%">
-                <asp:TextBox ID="Name" runat="server" class="customTextbox"></asp:TextBox></td>
+                <asp:TextBox ID="Name" runat="server" class="customTextbox"></asp:TextBox><asp:RequiredFieldValidator ID="VCName" ControlToValidate="Name" runat="server" ErrorMessage="Please enter your name!" ForeColor="Red"></asp:RequiredFieldValidator></td>
         </tr>
         <tr>
             <td width="30%" class ="sideways">
@@ -45,14 +45,14 @@
                 <strong>Age: </strong>
             </td>
             <td width="70%">
-                <asp:TextBox ID="Age" Width="50" runat="server"></asp:TextBox></td>
+                <asp:TextBox ID="Age" Width="50" runat="server"></asp:TextBox><asp:RangeValidator ID="RVAge" ControlToValidate="Age" Type="Integer" MinimumValue="16" MaximumValue="80" runat="server" ErrorMessage="Please enter an age between 16-80!" ForeColor="Red"></asp:RangeValidator></td>
         </tr>
         <tr>
             <td width="30%">
                 <strong>Email: </strong>
             </td>
             <td width="70%">
-                <asp:TextBox ID="Email" runat="server"></asp:TextBox></td>
+                <asp:TextBox ID="Email" runat="server"></asp:TextBox><asp:RegularExpressionValidator ID="REVEmail" ControlToValidate="Email" runat="server" ValidationExpression="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" ErrorMessage="Please eneter a valid email!" ForeColor="Red" ></asp:RegularExpressionValidator></td>
         </tr>
         <tr>
             <td width="30%">

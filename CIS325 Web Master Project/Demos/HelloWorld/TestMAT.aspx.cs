@@ -13,5 +13,10 @@ namespace CIS325_Web_Master_Project.Demos.HelloWorld
         {
 
         }
+
+        protected void Submit_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

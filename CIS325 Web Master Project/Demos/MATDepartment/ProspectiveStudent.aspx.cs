@@ -21,6 +21,13 @@ namespace CIS325_Web_Master_Project.Demos.MATDepartment
 
             htmlOutput = "<h2>Thank you for submitting you form, " + Name.Text + "</h2>";
             htmlOutput += "<br> Hope to see you at Flagler soon! :)";
+
+            //String interplolation by using the $ {}
+            htmlOutput += $"<br>Your intended major is {IntendedMajor.SelectedValue} - {IntendedMajor.SelectedItem.Text}.";
+
+            //.text returns the value.
+
+            
             //keep adding whatever you need for output here.
             ResultMsg.Text = htmlOutput;
         }

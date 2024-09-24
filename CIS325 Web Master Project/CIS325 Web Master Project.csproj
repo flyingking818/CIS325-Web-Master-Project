@@ -123,6 +123,7 @@
     <Content Include="Demos\HelloWorld\TestMAT.aspx" />
     <Content Include="Demos\MATDepartment\fc-logo.jpg" />
     <Content Include="Demos\MATDepartment\ProspectiveStudent.aspx" />
+    <Content Include="Demos\MortgageCalculator\MortgageCal.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -230,6 +231,13 @@
     </Compile>
     <Compile Include="Demos\MATDepartment\ProspectiveStudent.aspx.designer.cs">
       <DependentUpon>ProspectiveStudent.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Demos\MortgageCalculator\MortgageCal.aspx.cs">
+      <DependentUpon>MortgageCal.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Demos\MortgageCalculator\MortgageCal.aspx.designer.cs">
+      <DependentUpon>MortgageCal.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

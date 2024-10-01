@@ -82,11 +82,11 @@
                 </td>
             </tr>
             <tr>
-                <td style="width: 386px" class="modal-sm">Loan Amount<span style="color: #FF0000"><strong>*</strong></span>:</td>
+                <td style="width: 386px" class="modal-sm">&nbsp;Purchase Price:<span style="color: #FF0000"><strong>*</strong></span>:</td>
                 <td>
-                    <asp:TextBox ID="LoanAmount" runat="server" Width="250px" MaxLength="7" TextMode="Number"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="RFVLoanAmount" runat="server" ControlToValidate="LoanAmount" ErrorMessage="Please enter your loan amount." ForeColor="Red"></asp:RequiredFieldValidator>
-                    <asp:RangeValidator ID="RVLoanAmount" runat="server" ControlToValidate="LoanAmount" ErrorMessage="Please enter a value betwen 100,000 to 500,000" ForeColor="Red" MaximumValue="500000" MinimumValue="100000" Type="Double"></asp:RangeValidator>
+                    <asp:TextBox ID="PurchasePrice" runat="server" Width="250px" MaxLength="7" TextMode="Number"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="RFVPurchasePrice" runat="server" ControlToValidate="PurchasePrice" ErrorMessage="Please enter your purchase price." ForeColor="Red"></asp:RequiredFieldValidator>
+                    <asp:RangeValidator ID="RVPurchasePrice" runat="server" ControlToValidate="PurchasePrice" ErrorMessage="Please enter a value betwen 100,000 to 5000,000" ForeColor="Red" MaximumValue="500000" MinimumValue="100000" Type="Double"></asp:RangeValidator>
                 </td>
             </tr>
             <tr>

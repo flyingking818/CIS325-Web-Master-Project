@@ -308,7 +308,7 @@ namespace CIS325_Master_Project.Demos.MortgageProject
                 SmtpClient client = new SmtpClient();
 
                 client.Host = "smtp.gmail.com";
-                System.Net.NetworkCredential basicauthenticationinfo = new System.Net.NetworkCredential("flaglercisapp@gmail.com", "pbxhqcimvozecffe");
+                System.Net.NetworkCredential basicauthenticationinfo = new System.Net.NetworkCredential("flaglercisapp@gmail.com", "PUT_YOUR_APP_PASSCODE_HERE");                               
                 client.Port = int.Parse("587");
                 client.EnableSsl = true;
                 client.UseDefaultCredentials = false;
@@ -318,11 +318,15 @@ namespace CIS325_Master_Project.Demos.MortgageProject
                 client.Send(emailMessage);
 
                 /*
-                    Go to https://myaccount.google.com/security.
-                    Scroll down to "Signing in to Google".
-                    Enable 2-Step Verification. Then Click 2-Step Verification
-                    Search for "App Password" and add an App Password.
-                    Use the generated password in your code.
+                    Go to https://myaccount.google.com/apppasswords
+                    Create an app and generate a passcode. This replaces your real password in your app.
+                    Use the generated app passcode in your code.
+
+                    Tips:
+                    If you’ve set up 2-Step Verification but can’t find the option to add an app password, it might be because:
+                    Your Google Account has 2-Step Verification set up only for security keys.
+                    You’re logged into a work, school, or another organization account.
+                    Your Google Account has Advanced Protection.
                 */
 
                 return true;

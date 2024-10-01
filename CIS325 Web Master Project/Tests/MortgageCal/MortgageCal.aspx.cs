@@ -318,7 +318,7 @@ namespace CIS325_Master_Project.Demos.MortgageProject
                 client.Send(emailMessage);
 
                 /*
-                    Go to https://myaccount.google.com/apppasswords
+                    Go to https://myaccount.google.com/apppasswords 
                     Create an app and generate a passcode. This replaces your real password in your app.
                     Use the generated app passcode in your code.
 

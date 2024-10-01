@@ -203,9 +203,6 @@ namespace CIS325_Master_Project.Demos.MortgageProject
                                                 discountLoanTerm, discountLoanAmount,
                                                 discountMultipleAccounts);
 
-            //Calculate the effective loan amount! 
-            loanAmount = purchasePrice - downPaymentAmount;
-
             //Calculate monthly payment, using C# to simulate the PMT function in Excel
             monthlyPayment = CalculatePMT(loanAmount, annualPercentageRate, loanTerm);
 
@@ -243,6 +240,8 @@ namespace CIS325_Master_Project.Demos.MortgageProject
                           double calDisountLoanAmount,
                           double calDiscountMultipleAccounts)
         {
+            //==========Do you see a major logical error here? :) Please debug. =============
+
             /*
             //Calculate Down Payment without discounts
             double downPayment = calLoanAmount * calDownPaymentPercentage;

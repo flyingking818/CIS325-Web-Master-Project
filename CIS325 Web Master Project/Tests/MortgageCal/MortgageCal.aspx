@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="WageCalculator.aspx.cs" Inherits="CIS325_Web_Master_Project.Tests.MortgageCal.WageCalculator" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="MortgageCal.aspx.cs" Inherits="CIS325_Master_Project.Demos.MortgageProject.MortgageCal" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 <style>
     tr, td{
@@ -15,7 +15,7 @@
 
 <table class="nav-justified">
 <tr>
-<td class="text-center" colspan="2"><strong>Mortgage Calculator</strong></td>
+<td class="text-center" colspan="2"><h1>Mortgage Calculator</h1></td>
 </tr>
 <tr>
 <td style="width: 386px" class="modal-sm">&nbsp;</td>
@@ -58,7 +58,7 @@
 <td>
 <asp:DropDownList ID="State" runat="server" >
 <asp:ListItem Value="0">---Please Select---</asp:ListItem>
-<asp:ListItem Value="FL">Florida</asp:ListItem>
+    <asp:ListItem Value="FL">Florida</asp:ListItem>
 <asp:ListItem Value="GA">Georgia</asp:ListItem>
 <asp:ListItem Value="MI">Michigan</asp:ListItem>
 <asp:ListItem Value="NY">New York</asp:ListItem>
@@ -79,12 +79,13 @@
 </asp:CheckBoxList>
 </td>
 </tr>
-<tr>
-<td style="width: 386px" class="modal-sm">Loan Amount<span style="color: #FF0000"><strong>*</strong></span>:</td>
+
+    <tr>
+<td style="width: 386px" class="modal-sm">&nbsp;Purchase Price:<span style="color: #FF0000"><strong>*</strong></span>:</td>
 <td>
-<asp:TextBox ID="LoanAmount" runat="server" Width="250px" MaxLength="7" TextMode="Number"></asp:TextBox>
-<asp:RequiredFieldValidator ID="RFVLoanAmount" runat="server" ControlToValidate="LoanAmount" ErrorMessage="Please enter your loan amount." ForeColor="Red"></asp:RequiredFieldValidator>
-<asp:RangeValidator ID="RVLoanAmount" runat="server" ControlToValidate="LoanAmount" ErrorMessage="Please enter a value betwen 100,000 to 500,000" ForeColor="Red" MaximumValue="500000" MinimumValue="100000" Type="Double"></asp:RangeValidator>
+    <asp:TextBox ID="PurchasePrice" runat="server" Width="250px" MaxLength="7" TextMode="Number"></asp:TextBox>
+    <asp:RequiredFieldValidator ID="RFVPurchasePrice" runat="server" ControlToValidate="PurchasePrice" ErrorMessage="Please enter your purchase price." ForeColor="Red"></asp:RequiredFieldValidator>
+    <asp:RangeValidator ID="RVPurchasePrice" runat="server" ControlToValidate="PurchasePrice" ErrorMessage="Please enter a value betwen 100,000 to 5000,000" ForeColor="Red" MaximumValue="500000" MinimumValue="100000" Type="Double"></asp:RangeValidator>
 </td>
 </tr>
 <tr>
@@ -98,7 +99,7 @@
 </asp:RadioButtonList>
 <br />
 hide this by default, show this when 7 year ARM is selected.<br />
-<asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+<asp:TextBox ID="ARMNotes" runat="server"></asp:TextBox>
 </td>
 </panel>
 </tr>
@@ -126,3 +127,5 @@ hide this by default, show this when 7 year ARM is selected.<br />
 
 <asp:Label ID="ResultMsg" runat="server" style="font-size: large"></asp:Label>
 </asp:Content>
+
+

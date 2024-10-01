@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CIS325_Web_Master_Project.Tests.MortgageCal
+namespace CIS325_Master_Project.Demos.MortgageProject
 {
 
 
-    public partial class WageCalculator
+    public partial class MortgageCal
     {
 
         /// <summary>
@@ -105,31 +105,31 @@ namespace CIS325_Web_Master_Project.Tests.MortgageCal
         protected global::System.Web.UI.WebControls.CheckBoxList ExistingAccounts;
 
         /// <summary>
-        /// LoanAmount control.
+        /// PurchasePrice control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox LoanAmount;
+        protected global::System.Web.UI.WebControls.TextBox PurchasePrice;
 
         /// <summary>
-        /// RFVLoanAmount control.
+        /// RFVPurchasePrice control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVLoanAmount;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVPurchasePrice;
 
         /// <summary>
-        /// RVLoanAmount control.
+        /// RVPurchasePrice control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RangeValidator RVLoanAmount;
+        protected global::System.Web.UI.WebControls.RangeValidator RVPurchasePrice;
 
         /// <summary>
         /// LoanTerm control.
@@ -141,13 +141,13 @@ namespace CIS325_Web_Master_Project.Tests.MortgageCal
         protected global::System.Web.UI.WebControls.RadioButtonList LoanTerm;
 
         /// <summary>
-        /// TextBox1 control.
+        /// ARMNotes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox1;
+        protected global::System.Web.UI.WebControls.TextBox ARMNotes;
 
         /// <summary>
         /// DownPayment control.

@@ -100,7 +100,7 @@
                         </asp:RadioButtonList>
                         <br />
                         hide this by default, show this when 7 year ARM is selected.<br />
-                        <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="ARMNotes" runat="server"></asp:TextBox>
                     </td>
                 </panel>
             </tr>

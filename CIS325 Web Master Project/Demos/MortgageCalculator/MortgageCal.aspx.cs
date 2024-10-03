@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Net.Mail;
 
 namespace CIS325_Web_Master_Project.Demos.MortgageCalculator
 {
@@ -12,6 +13,10 @@ namespace CIS325_Web_Master_Project.Demos.MortgageCalculator
         protected void Page_Load(object sender, EventArgs e)
         {
 
+            if (LoanTerm.SelectedValue != "7ARM")
+                ARMNotes.Visible = false;
+            else
+                ARMNotes.Visible = true;
         }
 
         protected void Submit_Click(object sender, EventArgs e)
@@ -170,12 +175,13 @@ namespace CIS325_Web_Master_Project.Demos.MortgageCalculator
                                                 discountLoanTerm, discountLoanAmount,
                                                 discountMultipleAccounts);
 
-            //Do you see another bug here? :)
+            //Do you see another bug here? :) loanAmount should be updated after discounts!
             loanAmount = purchasePrice - downPaymentAmount;
 
             //Calculate monthly payment, using C# to simulate the PMT function in Excel
             monthlyPayment = CalculatePMT(loanAmount, annualPercentageRate, loanTerm);
 
+   
 
             //====================Output===============================
             //Hide the web form
@@ -190,6 +196,13 @@ namespace CIS325_Web_Master_Project.Demos.MortgageCalculator
                 "<tr><td><strong> Monthly Payment: </td><td>" + monthlyPayment.ToString("C") + "</td></tr>" +
                 "</table>";
 
+            //Send an email notification
+            isEmailSuccess = SendCustomerEmail(CustomerEmail.Text, CustomerName.Text, resultMsg);
+
+            if (isEmailSuccess)
+            {
+                resultMsg += "The email notification was successfully sent! :)";
+            }
             ResultMsg.Text = resultMsg;
 
         }
@@ -240,8 +253,65 @@ namespace CIS325_Web_Master_Project.Demos.MortgageCalculator
             return monthlyPayment;
         }
 
+        public bool SendCustomerEmail(string sendCustomerEmail, string sendCustomerName, string sendResultMsg)
+        {
+            string sendFromEmail = "flaglercisapp@gmail.com";
+
+            string sendFromName = "Mortgage Calculator";
+            string sendToEmail = sendCustomerEmail;
+            string sendToName = sendCustomerName;
+
+            string messageSubject = "Your mortgage calculator summary";
+            string messageBody = sendResultMsg;  //Here, you may customize the message a bit. :)
+
+            //This is standard procedure for object instatiation!!!
+            MailAddress from = new MailAddress(sendFromEmail, sendFromName);
+            MailAddress to = new MailAddress(sendToEmail, sendToName);
+            MailMessage emailMessage = new MailMessage(from, to);
+
+            emailMessage.Subject = messageSubject;
+            emailMessage.Body = messageBody;
+            emailMessage.IsBodyHtml = true;
+
+            //Hint: Create a method here to generete PDF (return true if successful)
 
 
+            //Using email client/server to send out emails. Watch out for the run-time errors!
+
+            try
+            {
+                SmtpClient client = new SmtpClient();
+
+                client.Host = "smtp.gmail.com";
+                System.Net.NetworkCredential basicauthenticationinfo = new System.Net.NetworkCredential("flaglercisapp@gmail.com", "PUT_YOUR_APP_PASSCODE_HERE");
+                client.Port = int.Parse("587");
+                client.EnableSsl = true;
+                client.UseDefaultCredentials = false;
+                client.Credentials = basicauthenticationinfo;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                //attachment - add one here using the attachment property.
+                client.Send(emailMessage);
+
+                /*
+                    Go to https://myaccount.google.com/apppasswords 
+                    Create an app and generate a passcode. This replaces your real password in your app.
+                    Use the generated app passcode in your code.
+
+                    Tips:
+                    If you’ve set up 2-Step Verification but can’t find the option to add an app password, it might be because:
+                    Your Google Account has 2-Step Verification set up only for security keys.
+                    You’re logged into a work, school, or another organization account.
+                    Your Google Account has Advanced Protection.
+                */
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                ErrorMsg.Text = $"An error occurred: {ex.Message}|{ex.HResult}";
+                throw;
+            }
+        }
 
 
     }

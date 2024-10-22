@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Net.Mail;
+using IronPdf;
+using System.Web.Services.Description;
 
 namespace CIS325_Web_Master_Project.Demos.MortgageCalculator
 {
@@ -255,6 +257,13 @@ namespace CIS325_Web_Master_Project.Demos.MortgageCalculator
 
         public bool SendCustomerEmail(string sendCustomerEmail, string sendCustomerName, string sendResultMsg)
         {
+            
+            IronPdf.Logging.Logger.EnableDebugging = true;
+            IronPdf.Logging.Logger.LogFilePath = "C:\\Temp\\Default.log"; //May be set to a directory name or full file
+
+            IronPdf.Logging.Logger.LoggingMode = IronPdf.Logging.Logger.LoggingModes.All;
+
+
             string sendFromEmail = "flaglercisapp@gmail.com";
 
             string sendFromName = "Mortgage Calculator";
@@ -274,6 +283,7 @@ namespace CIS325_Web_Master_Project.Demos.MortgageCalculator
             emailMessage.IsBodyHtml = true;
 
             //Hint: Create a method here to generete PDF (return true if successful)
+            
 
 
             //Using email client/server to send out emails. Watch out for the run-time errors!
@@ -283,11 +293,11 @@ namespace CIS325_Web_Master_Project.Demos.MortgageCalculator
                 SmtpClient client = new SmtpClient();
 
                 client.Host = "smtp.gmail.com";
-                System.Net.NetworkCredential basicauthenticationinfo = new System.Net.NetworkCredential("flaglercisapp@gmail.com", "PUT_YOUR_APP_PASSCODE_HERE");
+                System.Net.NetworkCredential basicAuthenticationInfo = new System.Net.NetworkCredential("reuelcis33@gmail.com", "fvfy phpn jyhz vaxs");
                 client.Port = int.Parse("587");
                 client.EnableSsl = true;
                 client.UseDefaultCredentials = false;
-                client.Credentials = basicauthenticationinfo;
+                client.Credentials = basicAuthenticationInfo;
                 client.DeliveryMethod = SmtpDeliveryMethod.Network;
                 //attachment - add one here using the attachment property.
                 client.Send(emailMessage);

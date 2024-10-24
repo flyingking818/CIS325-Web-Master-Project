@@ -288,6 +288,8 @@
     <Content Include="Demos\HelloWorld\TestMAT.aspx" />
     <Content Include="Demos\MATDepartment\fc-logo.jpg" />
     <Content Include="Demos\MATDepartment\ProspectiveStudent.aspx" />
+    <Content Include="Demos\MortgageApplicationDB\DBSchema.sql" />
+    <Content Include="Demos\MortgageApplicationDB\DBTestScript.sql" />
     <Content Include="Demos\MortgageApplicationDB\MortgageApplicationXML.aspx" />
     <Content Include="Demos\MortgageCalculator\MortgageCal.aspx" />
     <Content Include="favicon.ico" />

@@ -131,7 +131,7 @@ namespace CIS325_Web_Master_Project.Demos.MortgageApplicationDB
                         sqlQuery += "'" + xmlData + "'";
                         sqlQuery += "); SELECT CAST(scope_identity() AS INT);";
                         */
-                        
+
                         //Interpolation option - more efficient
                         //SQL injection?
 
@@ -140,14 +140,20 @@ namespace CIS325_Web_Master_Project.Demos.MortgageApplicationDB
                                             INSERT INTO MortgageApplicationXML 
                                             VALUES ('{customerName}', '{customerEmail}', '{customerSSN}', '{customerLoanAmount}', '{xmlData}');
                                             SELECT CAST(scope_identity() AS INT);";
-                                             
+
 
 
                         SqlCommand cmdMortgageApp = new SqlCommand(sqlQuery, conn);
 
                         /*  this is safer
-                         *  for a real app, we love stored proc(edures) in production!
-                         *  
+                           for a real app, we love stored proc(edures) in production!
+                       
+
+                        string sqlQuery = @"
+                        INSERT INTO MortgageApplicationXML (CustomerName, CustomerEmail, CustomerSSN, CustomerLoanAmount, DataFormXML)
+                        VALUES (@CustomerName, @CustomerEmail, @CustomerSSN, @CustomerLoanAmount, @DataFormXML);
+                        SELECT CAST(scope_identity() AS INT);";
+                          
                         cmdMortgageApp.Parameters.AddWithValue("@CustomerName", customerName);
                         cmdMortgageApp.Parameters.AddWithValue("@CustomerEmail", customerEmail);
                         cmdMortgageApp.Parameters.AddWithValue("@CustomerSSN", customerSSN);
@@ -155,6 +161,7 @@ namespace CIS325_Web_Master_Project.Demos.MortgageApplicationDB
                         cmdMortgageApp.Parameters.AddWithValue("@DataFormXML", xmlData);
                         cmdMortgageApp.Parameters.AddWithValue("@AppID", int.Parse(queryAppID));
                         */
+
 
                         int newMortgageAppID = (int)cmdMortgageApp.ExecuteScalar();
                         ResultMsg.Text = "Your application has been succesfully submitted!" + "<a href=\"MortgageApplicationXMLMain.aspx \"> Click here</a> to view the results! ";
@@ -182,34 +189,53 @@ namespace CIS325_Web_Master_Project.Demos.MortgageApplicationDB
                                         DataFormXML = '{xmlData}' 
                                     WHERE AppID = {int.Parse(queryAppID)};";
 
+                        SqlCommand cmdMortgageApp = new SqlCommand(sqlQuery, conn);
 
-SqlCommand cmdMortgageApp = new SqlCommand(sqlQuery, conn);
-cmdMortgageApp.ExecuteNonQuery();
-ResultMsg.Text = "Your application has been succesfully updated!" + "<a href=\"MortgageApplicationXMLMain.aspx \"> Click here</a> to view the results! ";
-}
+                        //Parameter version
+                        /*
+                        string sqlQuery = @"
+                                UPDATE MortgageApplicationXML 
+                                SET CustomerName = @CustomerName, 
+                                    CustomerEmail = @CustomerEmail, 
+                                    CustomerSSN = @CustomerSSN, 
+                                    CustomerLoanAmount = @CustomerLoanAmount, 
+                                    DataFormXML = @DataFormXML 
+                                WHERE AppID = @AppID";                     
+                                                
+                        cmdMortgageApp.Parameters.AddWithValue("@CustomerName", customerName);
+                        cmdMortgageApp.Parameters.AddWithValue("@CustomerEmail", customerEmail);
+                        cmdMortgageApp.Parameters.AddWithValue("@CustomerSSN", customerSSN);
+                        cmdMortgageApp.Parameters.AddWithValue("@CustomerLoanAmount", customerLoanAmount);
+                        cmdMortgageApp.Parameters.AddWithValue("@DataFormXML", xmlData);
+                        cmdMortgageApp.Parameters.AddWithValue("@AppID", int.Parse(queryAppID));
+                        */
+                        
+                        cmdMortgageApp.ExecuteNonQuery();
+                        ResultMsg.Text = "Your application has been succesfully updated!" + "<a href=\"MortgageApplicationXMLMain.aspx \"> Click here</a> to view the results! ";
+                    }
 
-DataFormPanel.Visible = false;
-Submit.Visible = false;
-//You can choose to use a separate Update button.
-//Update.Visible = false;
+                    DataFormPanel.Visible = false;
+                    Submit.Visible = false;
+                    //You can choose to use a separate Update button.
+                    //Update.Visible = false;
 
-//Add a Cancel button by yourself. :)
-//Cancel.Visible = false; 
+                    //Add a Cancel button by yourself. :)
+                    //Cancel.Visible = false; 
 
 
-//Email Notification for eRouting.
-// How to grab that AppID for the new form?
+                    //Email Notification for eRouting.
+                    // How to grab that AppID for the new form?
 
-//Don't forget to close the DB connection!
-conn.Close();
-}
-catch (SqlException exception)
-{
-ErrorMsg.Text = "Sorry an error has occurred!" + "Error Message: " + exception.Message + " Error NO: " + exception.Number;
-throw;
-}
-}
-}
+                    //Don't forget to close the DB connection!
+                    conn.Close();
+                }
+                catch (SqlException exception)
+                {
+                    ErrorMsg.Text = "Sorry an error has occurred!" + "Error Message: " + exception.Message + " Error NO: " + exception.Number;
+                    throw;
+                }
+            }
+        }
 
-}
+    }
 }

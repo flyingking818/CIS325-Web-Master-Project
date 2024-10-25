@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -37,6 +38,7 @@ namespace CIS325_Web_Master_Project.Demos.MortgageApplicationDB
 
                 foreach (Control myContol in DataFormPanel.Controls)
                 {
+                    /*
                     if (myContol.GetType().Name == "TextBox")
                     {
                         TextBox textbox = (TextBox)myContol;
@@ -67,17 +69,50 @@ namespace CIS325_Web_Master_Project.Demos.MortgageApplicationDB
                         // try this one by yourself - hint: use a loop to concatenate the selected values
 
                     }
+                    */
+
+                    switch (myContol.GetType().Name)
+                    {
+                        case "TextBox":
+                            TextBox textbox = (TextBox)myContol;
+                            xmlForm.Element("DataForm").Add(new XElement("Field", textbox.Text, new XAttribute("ID", myContol.ID), new XAttribute("Type", "TextBox")));
+                            break;
+                        case "RadioButtonList":
+                            RadioButtonList radiolst = (RadioButtonList)myContol;
+                            xmlForm.Element("DataForm").Add(new XElement("Field", radiolst.Text, new XAttribute("ID", myContol.ID), new XAttribute("Type", "RadioButtonList")));
+                            break;
+                        case "DropDownList":
+                            DropDownList droplst = (DropDownList)myContol;
+                            xmlForm.Element("DataForm").Add(new XElement("Field", droplst.Text, new XAttribute("ID", myContol.ID), new XAttribute("Type", "DropDownList")));
+                            break;
+                        case "CheckBox":
+                            CheckBox chk = (CheckBox)myContol;
+                            if (chk.Checked)
+                            {
+                                xmlForm.Element("DataForm").Add(new XElement("Field", chk.Text, new XAttribute("ID", myContol.ID), new XAttribute("Type", "CheckBox")));
+                            }
+                            break;
+                        case "CheckBoxList":
+                            CheckBoxList chklst = (CheckBoxList)myContol;
+
+                            // try this one by yourself - hint: use a loop to concatenate the selected values
+                            break;
+
+                        default:
+                            break;
+                    }
+
                 }
-                string xmlData = xmlForm.ToString();
+                string xmlData = xmlForm.ToString();  //deserialization 
                 //End of XML processing
 
 
-                //Get AppID from QueryString
+                //Get AppID from QueryString -- using the URL to pass values.
                 string queryAppID = Request.QueryString["AppID"];
                 string queryAction = Request.QueryString["Action"];
                 //========DB Operations==========
 
-                //Establish a SQL connect to my Database                
+                //Establish a SQL connection to my Database                
                 SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["MortgageAppDB"].ConnectionString);
 
                 try
@@ -87,6 +122,7 @@ namespace CIS325_Web_Master_Project.Demos.MortgageApplicationDB
 
                     if (queryAction != "Edit")
                     {
+                        /*
                         string sqlQuery = "INSERT INTO MortgageApplicationXML VAlUES (";
                         sqlQuery += "'" + customerName + "',";
                         sqlQuery += "'" + customerEmail + "',";
@@ -94,13 +130,38 @@ namespace CIS325_Web_Master_Project.Demos.MortgageApplicationDB
                         sqlQuery += "'" + customerLoanAmount + "',";
                         sqlQuery += "'" + xmlData + "'";
                         sqlQuery += "); SELECT CAST(scope_identity() AS INT);";
+                        */
+                        
+                        //Interpolation option - more efficient
+                        //SQL injection?
+
+                        //This is not very safe.
+                        string sqlQuery = $@"
+                                            INSERT INTO MortgageApplicationXML 
+                                            VALUES ('{customerName}', '{customerEmail}', '{customerSSN}', '{customerLoanAmount}', '{xmlData}');
+                                            SELECT CAST(scope_identity() AS INT);";
+                                             
+
 
                         SqlCommand cmdMortgageApp = new SqlCommand(sqlQuery, conn);
+
+                        /*  this is safer
+                         *  for a real app, we love stored proc(edures) in production!
+                         *  
+                        cmdMortgageApp.Parameters.AddWithValue("@CustomerName", customerName);
+                        cmdMortgageApp.Parameters.AddWithValue("@CustomerEmail", customerEmail);
+                        cmdMortgageApp.Parameters.AddWithValue("@CustomerSSN", customerSSN);
+                        cmdMortgageApp.Parameters.AddWithValue("@CustomerLoanAmount", customerLoanAmount);
+                        cmdMortgageApp.Parameters.AddWithValue("@DataFormXML", xmlData);
+                        cmdMortgageApp.Parameters.AddWithValue("@AppID", int.Parse(queryAppID));
+                        */
+
                         int newMortgageAppID = (int)cmdMortgageApp.ExecuteScalar();
                         ResultMsg.Text = "Your application has been succesfully submitted!" + "<a href=\"MortgageApplicationXMLMain.aspx \"> Click here</a> to view the results! ";
                     }
                     else
                     {
+                        /*
                         string sqlQuery = "UPDATE MortgageApplicationXML SET ";
                         sqlQuery += "CustomerName='" + customerName + "',";
                         sqlQuery += "CustomerEmail='" + customerEmail + "',";
@@ -108,34 +169,47 @@ namespace CIS325_Web_Master_Project.Demos.MortgageApplicationDB
                         sqlQuery += "CustomerLoanAmount=" + customerLoanAmount + ",";
                         sqlQuery += "DataFormXML='" + xmlData + "'";
                         sqlQuery += "WHERE AppID=" + int.Parse(queryAppID);
+                        */
 
-                        SqlCommand cmdMortgageApp = new SqlCommand(sqlQuery, conn);
-                        cmdMortgageApp.ExecuteNonQuery();
-                        ResultMsg.Text = "Your application has been succesfully updated!" + "<a href=\"MortgageApplicationXMLMain.aspx \"> Click here</a> to view the results! ";
-                    }
+                        //Interpolation Option
 
-                    DataFormPanel.Visible = false;
-                    Submit.Visible = false;
-                    //You can choose to use a separate Update button.
-                    //Update.Visible = false;
-
-                    //Add a Cancel button by yourself. :)
-                    //Cancel.Visible = false; 
+                        string sqlQuery = $@"
+                                    UPDATE MortgageApplicationXML 
+                                    SET CustomerName = '{customerName}', 
+                                        CustomerEmail = '{customerEmail}', 
+                                        CustomerSSN = '{customerSSN}', 
+                                        CustomerLoanAmount = {customerLoanAmount}, 
+                                        DataFormXML = '{xmlData}' 
+                                    WHERE AppID = {int.Parse(queryAppID)};";
 
 
-                    //Email Notification for eRouting.
-                    // How to grab that AppID for the new form?
+SqlCommand cmdMortgageApp = new SqlCommand(sqlQuery, conn);
+cmdMortgageApp.ExecuteNonQuery();
+ResultMsg.Text = "Your application has been succesfully updated!" + "<a href=\"MortgageApplicationXMLMain.aspx \"> Click here</a> to view the results! ";
+}
 
-                    //Don't forget to close the DB connection!
-                    conn.Close();
-                }
-                catch (SqlException exception)
-                {
-                    ErrorMsg.Text = "Sorry an error has occurred!" + "Error Message: " + exception.Message + " Error NO: " + exception.Number;
-                    throw;
-                }
-            }
-        }
+DataFormPanel.Visible = false;
+Submit.Visible = false;
+//You can choose to use a separate Update button.
+//Update.Visible = false;
 
-    }
+//Add a Cancel button by yourself. :)
+//Cancel.Visible = false; 
+
+
+//Email Notification for eRouting.
+// How to grab that AppID for the new form?
+
+//Don't forget to close the DB connection!
+conn.Close();
+}
+catch (SqlException exception)
+{
+ErrorMsg.Text = "Sorry an error has occurred!" + "Error Message: " + exception.Message + " Error NO: " + exception.Number;
+throw;
+}
+}
+}
+
+}
 }

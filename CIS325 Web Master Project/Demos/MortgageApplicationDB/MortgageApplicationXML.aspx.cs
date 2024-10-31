@@ -14,7 +14,103 @@ namespace CIS325_Web_Master_Project.Demos.MortgageApplicationDB
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            //Get AppID from QueryString
+            string queryAppID = Request.QueryString["AppID"];
+            string queryAction = Request.QueryString["Action"];
 
+            if (queryAction == "Edit" || queryAction == "View")
+            {
+                //Passed validation, now do the DB operation.
+
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["MortgageAppDB"].ConnectionString);
+
+                try
+                {
+                    conn.Open();
+                    conn.ChangeDatabase("jwang");
+
+                    //construct SQLquery (R)
+                    string sqlQuery = "SELECT * FROM MortgageApplicationXML WHERE AppID = " + queryAppID + ";";
+
+                    SqlCommand cmdMortgageApp = new SqlCommand(sqlQuery, conn);
+                    SqlDataReader rsCustomers = cmdMortgageApp.ExecuteReader();
+
+                    if (rsCustomers.Read())
+                    {
+                        XDocument doc = XDocument.Parse(rsCustomers["DataFormXML"].ToString());
+                        //Loop through all elements
+
+                        foreach (XElement xe in doc.Root.Descendants())
+                        {
+                            string fieldID = xe.Attribute("ID").Value;
+                            string fieldType = xe.Attribute("Type").Value;
+                            string fieldValue = xe.Value;
+
+                            //Find controls by using the MainContent place holder which is defined in the HTML document
+                            ContentPlaceHolder cph = (ContentPlaceHolder)this.Master.FindControl("MainContent");
+                            
+                            //You may use the switch...case block here as well. :)
+                            if (fieldType == "TextBox")
+                            {
+                                TextBox tb = (TextBox)cph.FindControl(fieldID);
+                                tb.Text = fieldValue;
+                                if (queryAction == "View")
+                                {
+                                    tb.ReadOnly = true;
+                                    tb.BorderStyle = BorderStyle.None;
+                                }
+                            }
+                            else if (fieldType == "CheckBoxList")
+                            {
+                                CheckBoxList chklst = (CheckBoxList)cph.FindControl(fieldID);
+                                string[] items = fieldValue.Split(',');
+                                for (int i = 0; i <= items.GetUpperBound(0); i++)
+                                {
+                                    ListItem currentCheckBox = chklst.Items.FindByText(items[i].ToString().Trim());
+                                    if (currentCheckBox != null)
+                                    {
+                                        currentCheckBox.Selected = true;
+                                        //currentCheckBox.Enabled = false;
+                                    }
+                                    if (queryAction == "View")
+                                        chklst.Items[i].Enabled = false;
+                                }
+                            }
+                            else if (fieldType == "RadioButtonList")
+                            {
+                                RadioButtonList radiolst = (RadioButtonList)cph.FindControl(fieldID);
+                                ListItem currentRadioBox = radiolst.Items.FindByText(fieldValue);
+                                if (currentRadioBox != null)
+                                {
+                                    currentRadioBox.Selected = true;
+                                }
+                                if (queryAction == "View")
+                                {
+                                    //disable radiobutton
+                                    for (int i = 0; i < radiolst.Items.Count; i++)
+                                    {
+                                        radiolst.Items[i].Enabled = false;
+                                    }
+                                }
+                            }
+                            //Do the drop down list by yourself! :)
+
+                        }
+                    }
+                    else
+                    {
+                        ErrorMsg.Text = "No customer found! ";
+                    }
+
+                }
+                catch (SqlException exception)
+                {
+
+                    ErrorMsg.Text = "Sorry an error has occurred! " + "Error Message: " + exception.Message + "Error No: " + exception.Number;
+                }
+
+                conn.Close();
+            }
         }
 
         protected void Submit_Click(object sender, EventArgs e)
@@ -136,34 +232,38 @@ namespace CIS325_Web_Master_Project.Demos.MortgageApplicationDB
                         //SQL injection?
 
                         //This is not very safe.
+                        
                         string sqlQuery = $@"
                                             INSERT INTO MortgageApplicationXML 
                                             VALUES ('{customerName}', '{customerEmail}', '{customerSSN}', '{customerLoanAmount}', '{xmlData}');
                                             SELECT CAST(scope_identity() AS INT);";
-
-
-
+                                                
                         SqlCommand cmdMortgageApp = new SqlCommand(sqlQuery, conn);
+                        
 
-                        /*  this is safer
-                           for a real app, we love stored proc(edures) in production!
+                        //This is safer for a real app, we love stored proc(edures) in production!
                        
-
+                        /*
                         string sqlQuery = @"
                         INSERT INTO MortgageApplicationXML (CustomerName, CustomerEmail, CustomerSSN, CustomerLoanAmount, DataFormXML)
                         VALUES (@CustomerName, @CustomerEmail, @CustomerSSN, @CustomerLoanAmount, @DataFormXML);
                         SELECT CAST(scope_identity() AS INT);";
+
+                        SqlCommand cmdMortgageApp = new SqlCommand(sqlQuery, conn);
                           
                         cmdMortgageApp.Parameters.AddWithValue("@CustomerName", customerName);
                         cmdMortgageApp.Parameters.AddWithValue("@CustomerEmail", customerEmail);
                         cmdMortgageApp.Parameters.AddWithValue("@CustomerSSN", customerSSN);
                         cmdMortgageApp.Parameters.AddWithValue("@CustomerLoanAmount", customerLoanAmount);
                         cmdMortgageApp.Parameters.AddWithValue("@DataFormXML", xmlData);
-                        cmdMortgageApp.Parameters.AddWithValue("@AppID", int.Parse(queryAppID));
+                        //cmdMortgageApp.Parameters.AddWithValue("@AppID", int.Parse(queryAppID));
+                        
                         */
 
-
                         int newMortgageAppID = (int)cmdMortgageApp.ExecuteScalar();
+
+                        //Add a SendFacultyEmail(newRequestID, emailAddress);
+
                         ResultMsg.Text = "Your application has been succesfully submitted!" + "<a href=\"MortgageApplicationXMLMain.aspx \"> Click here</a> to view the results! ";
                     }
                     else
